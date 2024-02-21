@@ -12,10 +12,17 @@ router.get("/", (request, response) => {
 })
 
 
+
 //register endpoint
 router.post("/register", (request, response) => {
 
-
+  //catch error if no password is entered
+if(request.body.password === ''){
+  return response.status(500).send({
+    message: "No password",
+    error,
+  });
+}
 
 // hash the password
 bcrypt
