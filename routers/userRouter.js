@@ -3,7 +3,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../controller/auth");
 const User = require('../db/userModel')//require userModel schema
+const registerInputValidator = require('../controller/registerInputValidator')
+const loginInputValidator = require('../controller/loginInputValidator')
+const { validationResult } = require('express-validator');
 const router = new express.Router()
+
 
 
 //server running
@@ -14,7 +18,16 @@ router.get("/", (request, response) => {
 
 
 //register endpoint
-router.post("/register", (request, response) => {
+router.post("/register", registerInputValidator, (request, response) => {
+
+
+  //express-validator for data validation
+  const errors = validationResult(request)
+  if (!errors.isEmpty()) {
+    // in case request params don't meet the validation criteria
+    return response.status(422).json({errors: errors.array()})
+}
+
 
   //catch error if no password is entered
 if(request.body.password === ''){
@@ -64,8 +77,24 @@ bcrypt
 
 
 
+
+
+
+
 //login endpoint
 router.post("/login",(request, response) => {
+
+
+  //express-validator for data validation
+  const errors = validationResult(request)
+  if (!errors.isEmpty()) {
+    // in case request params don't meet the validation criteria
+    return response.status(422).json({errors: errors.array()})
+}
+
+
+
+
    // check if email exists
   User.findOne({ email: request.body.email })
 
