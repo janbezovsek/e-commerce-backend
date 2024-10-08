@@ -14,6 +14,8 @@ DB_URL = mongodb+srv://plenty:<password>@cluster0.z3yuu.mongodb.net/<dbname>?ret
 We also need to set the port number for hosting our server : PORT = 5000
 
 
-We run the server with the following command: nodemon server.js
+We run the server with the following command: npm run devStart or npm start
 
 For testing our API endpoints we have used a tool called Postman.
+
+We pushed our Docker image to Docker hub : https://hub.docker.com/repository/docker/bezovsekjan/server/general 
